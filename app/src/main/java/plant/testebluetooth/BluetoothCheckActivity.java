@@ -1,14 +1,14 @@
 package plant.testebluetooth;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 
-public class BluetoothCheckActivity extends Activity {
+public class BluetoothCheckActivity extends AppCompatActivity {
     protected BluetoothAdapter btfAdapter;
 
     @Override

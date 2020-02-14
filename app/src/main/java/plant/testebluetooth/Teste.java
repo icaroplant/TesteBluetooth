@@ -36,7 +36,6 @@ public class Teste extends BluetoothCheckActivity implements ComunicationControl
 
     private TextView tv_msg;
     private ProgressBar progressBar;
-    private ProgressDialog progressDialog;
 
     private Activity activity;
 
@@ -155,11 +154,12 @@ public class Teste extends BluetoothCheckActivity implements ComunicationControl
     }
 
     private class AsyncConnection extends AsyncTask<Void,Void,Void>{
-        private Teste teste;
+        private ProgressDialog progressDialog;
+        private Teste activity;
         private Exception e;
 
-        public AsyncConnection(Teste teste) {
-            this.teste = teste;
+        public AsyncConnection(Teste activity) {
+            this.activity = activity;
         }
 
         @Override
@@ -167,7 +167,7 @@ public class Teste extends BluetoothCheckActivity implements ComunicationControl
             super.onPreExecute();
             if(verifica()){
                 runOnUiThread(() -> {
-                    progressDialog = ProgressDialog.show(activity, getString(R.string.app_name), "Estabelecendo conexão, aguarde...", true, false);
+                    progressDialog = ProgressDialog.show(Teste.this.activity, getString(R.string.app_name), "Estabelecendo conexão, aguarde...", true, false);
                     progressBar.setVisibility(View.VISIBLE);
                     buttonEnviar.setEnabled(false);
                     buttonReceber.setEnabled(false);
@@ -195,7 +195,7 @@ public class Teste extends BluetoothCheckActivity implements ComunicationControl
                         //conectou = true;
 
                         // Inicia o controlador do controle
-                        controle = new ComunicationController(socket, teste);
+                        controle = new ComunicationController(socket, activity);
                         conectou = true;
 
                     }
@@ -217,7 +217,7 @@ public class Teste extends BluetoothCheckActivity implements ComunicationControl
                     progressBar.setVisibility(View.GONE);
                     progressDialog.dismiss();
                     if(conectou) {
-                        Toast.makeText(teste, "Conectado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Conectado", Toast.LENGTH_SHORT).show();
                         buttonEnviar.setEnabled(true);
                         buttonReceber.setEnabled(true);
                         buttonParar.setEnabled(true);
@@ -240,8 +240,8 @@ public class Teste extends BluetoothCheckActivity implements ComunicationControl
 
         private boolean verifica(){
             return getBaseContext() != null
+                    && Teste.this.activity != null
                     && activity != null
-                    && teste != null
                     && buttonEnviar != null
                     && buttonReceber != null
                     && buttonParar != null
