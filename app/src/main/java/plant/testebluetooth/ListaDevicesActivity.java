@@ -141,9 +141,6 @@ public class ListaDevicesActivity extends BluetoothCheckActivity implements Adap
             boolean pareado = device.getBondState() == BluetoothDevice.BOND_BONDED;
 
             String deviceName = device.getName();
-            if(deviceName.equals("HC-05")){
-                deviceName += " Bastão Esteio";
-            }
             deviceName += " - " + device.getAddress();
 
             //evita repetir nomes
